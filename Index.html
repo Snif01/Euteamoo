@@ -1,1 +1,137 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Eu Te Amo</title>
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+      background-color: #1a001a;
+      font-family: 'Arial', sans-serif;
+      cursor: pointer;
+    }
+
+    .center-text {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 3em;
+      color: #cc66ff;
+      font-weight: bold;
+      text-align: center;
+      text-shadow: 0 0 10px #cc66ff, 0 0 20px #cc66ff;
+      z-index: 10;
+      pointer-events: none;
+    }
+
+    @media (max-width: 600px) {
+      .center-text {
+        font-size: 2em;
+        padding: 0 10px;
+      }
+    }
+
+    .love-drop {
+      position: absolute;
+      font-size: 1.5em;
+      animation: fall linear infinite;
+      white-space: nowrap;
+      text-shadow: 0 0 5px #cc66ff;
+      pointer-events: none;
+    }
+
+    @keyframes fall {
+      0% {
+        transform: translateY(-100px);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(100vh);
+        opacity: 0;
+      }
+    }
+
+    .explosion {
+      position: absolute;
+      font-size: 1.4em;
+      pointer-events: none;
+      animation: explode 1s ease-out forwards;
+      text-shadow: 0 0 5px #cc66ff;
+    }
+
+    @keyframes explode {
+      0% {
+        transform: scale(1);
+        opacity: 1;
+      }
+      100% {
+        transform: scale(4);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Texto central -->
+<div class="center-text">eu te amo minha praguinha</div>
+
+<!-- Música via YouTube (invisível e automático) -->
+<iframe width="0" height="0" src="https://www.youtube.com/embed/LU3d_46BeWE?autoplay=1&loop=1&playlist=LU3d_46BeWE" 
+frameborder="0" allow="autoplay; encrypted-media" allowfullscreen style="display:none;"></iframe>
+
+<script>
+  const frases = ["eu te amo", "❤️", "💗"];
+
+  function createLoveDrop() {
+    const drop = document.createElement("div");
+    drop.classList.add("love-drop");
+    drop.innerText = frases[Math.floor(Math.random() * frases.length)];
+    drop.style.color = "#cc66ff";
+    drop.style.left = Math.random() * window.innerWidth + "px";
+    drop.style.animationDuration = (3 + Math.random() * 5) + "s";
+    drop.style.top = "-30px";
+
+    document.body.appendChild(drop);
+
+    setTimeout(() => {
+      drop.remove();
+    }, 8000);
+  }
+
+  setInterval(createLoveDrop, 200);
+
+  function createExplosion(x, y) {
+    for (let i = 0; i < 20; i++) {
+      const explosion = document.createElement("div");
+      explosion.classList.add("explosion");
+      explosion.innerText = frases[Math.floor(Math.random() * frases.length)];
+      explosion.style.color = "#cc66ff";
+      explosion.style.left = x + "px";
+      explosion.style.top = y + "px";
+      explosion.style.transform = `translate(-50%, -50%) rotate(${Math.random() * 360}deg) scale(1)`;
+      document.body.appendChild(explosion);
+
+      setTimeout(() => {
+        explosion.remove();
+      }, 1000);
+    }
+  }
+
+  document.body.addEventListener("click", (e) => {
+    createExplosion(e.clientX, e.clientY);
+  });
+
+  document.body.addEventListener("touchstart", (e) => {
+    const touch = e.touches[0];
+    if (touch) {
+      createExplosion(touch.clientX, touch.clientY);
+    }
+  });
+</script>
+
+</body>
+</html>
 
